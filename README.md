@@ -28,7 +28,7 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 2.Installez les dépendances :
 
 ```bash
-   cd recette-API npm install
+   cd myrecette-API npm install
 ```
 
 ## Configuration de la Base de Données
@@ -46,7 +46,7 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 ```bash
  {
   user: "votre_nom_utilisateur",
-  password: "votre_mot_de_passe",
+   password: "", # Laissez ce champ vide, car aucun mot de passe n'est requis
   database: "votre_nom_de_base_de_données",
 }
 ```
