@@ -25,8 +25,8 @@ class RecipeController {
     try {
       const title = req.body.title;
       const type = req.body.type;
-      const ingredient = req.body.ingredient;
-      await Recipe.createRecipe(title, ingredient, type);
+      const ingredients = req.body.ingredients;
+      await Recipe.createRecipe(title, type, ingredients);
       res.json('Added successfully');
     } catch (e) {
       console.log(e.message);
@@ -46,16 +46,25 @@ class RecipeController {
   }
 
   static async updateRecipe(req, res, next) {
-    try {
-      const id = req.params.id;
-      const title = req.body.title;
-      const type = req.body.type;
-      const ingredient = req.body.ingredient;
-      await Recipe.updateRecipe(id, title, ingredient, type);
-      res.json('Updted successfully');
-    } catch (e) {
-      console.log(e.message);
+    const id = req.params.id;
+    const { title, type, ingredients } = req.body;
+
+    if (!title || !type || !ingredients) {
+      return res.status(400).json({
+        error:
+          'Tous les champs (title, ingredients, type) doivent être fournis.',
+      });
     }
+
+    try {
+      await Recipe.updateRecipe(id, title, ingredients, type);
+      res.json('Updated successfully');
+    } catch {
+      res
+        .status(500)
+        .json({ error: 'Erreur lors de la mise à jour de la recette.' });
+    }
+
     next();
   }
 }

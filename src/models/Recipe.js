@@ -24,12 +24,12 @@ class Recipe {
     }
   }
 
-  static async createRecipe(title, type, ingredient) {
+  static async createRecipe(title, type, ingredients) {
     const connection = await pool.getConnection();
     try {
       const [result] = await connection.execute(
-        'INSERT INTO recipes (title, type, ingredient) VALUES (?, ?, ?)',
-        [title, ingredient, type]
+        'INSERT INTO recipes (title, type, ingredients) VALUES (?, ?, ?)',
+        [title, type, ingredients],
       );
       return result.insertId;
     } finally {
@@ -37,13 +37,18 @@ class Recipe {
     }
   }
 
-
-  static async updateRecipe(id, title, ingredient, type) {
+  static async updateRecipe(id, title, ingredients, type) {
     const connection = await pool.getConnection();
     try {
+      const [rows] = await connection.execute(
+        'SELECT id FROM recipes WHERE id = ?',
+        [id],
+      );
+      if (!rows.length) throw new Error('Recipe not found');
+
       await connection.execute(
-        'UPDATE recipes SET title = ?, type = ?, ingredient = ? WHERE id = ?',
-        [title, ingredient, type, id],
+        'UPDATE recipes SET title = ?, type = ?, ingredients = ? WHERE id = ?',
+        [title, type, ingredients, id],
       );
       return true;
     } finally {
@@ -54,6 +59,12 @@ class Recipe {
   static async destroyRecipe(id) {
     const connection = await pool.getConnection();
     try {
+      const [rows] = await connection.execute(
+        'SELECT id FROM recipes WHERE id = ?',
+        [id],
+      );
+      if (!rows.length) throw new Error('Recipe not found');
+
       await connection.execute('DELETE FROM recipes WHERE id = ?', [id]);
       return true;
     } finally {

@@ -2,13 +2,15 @@ import { check, param, validationResult } from 'express-validator';
 import { StatusCodes } from 'http-status-codes';
 import { Recipe } from '../models/Recipe.js';
 
+const validTypes = ['starter', 'main course', 'dessert'];
+
 const addRequestValidator = [
   check('title')
     .notEmpty()
     .withMessage('Titre ne peut pas être vide!')
     .bail()
     .isLength({ min: 4 })
-    .withMessage('Minimum 6 caractères requis!')
+    .withMessage('Minimum 4 caractères requis!')
     .bail()
     .custom(async (value) => {
       const count = await Recipe.checkRecipe(value);
@@ -21,8 +23,15 @@ const addRequestValidator = [
     .notEmpty()
     .withMessage('Type ne peut pas être vide!')
     .bail()
-    .isLength({ min: 4 })
-    .withMessage('Minimum 4 caractères requis!')
+    .isIn(validTypes)
+    .withMessage(`Type doit être l'un des suivants : ${validTypes.join(', ')}`)
+    .bail(),
+  check('ingredients')
+    .notEmpty()
+    .withMessage('Ingrédients ne peuvent pas être vides!')
+    .bail()
+    .isLength({ min: 10, max: 50 })
+    .withMessage('Les ingrédients doivent comporter entre 10 et 50 caractères!')
     .bail(),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -32,14 +41,6 @@ const addRequestValidator = [
         .json({ errors: errors.array() });
     next();
   },
-
-  check('ingredient')
-    .notEmpty()
-    .withMessage('Ingredients ne peut pas être vide!')
-    .bail()
-    .isLength({ min: 10, max: 50 })
-    .withMessage('Entre 10 et 50 caractères!')
-    .bail(),
 ];
 
 const deleteRequestValidator = [
@@ -95,8 +96,15 @@ const updateRequestValidator = [
     .notEmpty()
     .withMessage('Type ne peut pas être vide!')
     .bail()
-    .isLength({ min: 4 })
-    .withMessage('Minimum 4 caractères requis!')
+    .isIn(validTypes)
+    .withMessage(`Type doit être l'un des suivants : ${validTypes.join(', ')}`)
+    .bail(),
+  check('ingredients')
+    .notEmpty()
+    .withMessage('Ingrédients ne peuvent pas être vides!')
+    .bail()
+    .isLength({ min: 10, max: 50 })
+    .withMessage('Les ingrédients doivent comporter entre 10 et 50 caractères!')
     .bail(),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -106,14 +114,6 @@ const updateRequestValidator = [
         .json({ errors: errors.array() });
     next();
   },
-
-  check('ingredient')
-    .notEmpty()
-    .withMessage('Ingredients ne peut pas être vide!')
-    .bail()
-    .isLength({ min: 10, max: 50 })
-    .withMessage('Entre 10 et 50 caractères!')
-    .bail(),
 ];
 
 export { addRequestValidator, deleteRequestValidator, updateRequestValidator };

@@ -6,8 +6,7 @@ Ce projet backend a été développé en Express.js pour gérer des recettes via
 
 ## Diagramme de Classes
 
-![Diagramme de Classes](./src/assets/D-class.png)
-
+![Diagramme de Classes](./src/assets/Recipe%20UML.png)
 
 ## Prérequis
 
@@ -23,7 +22,7 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 1. Clonez le dépôt :
 
 ```bash
-   git clone https://github.com/Zoubeir7/recette-API.git
+   git clone https://github.com/AssaBaradji/myrecette-API.git
 ```
 
 2.Installez les dépendances :
@@ -40,11 +39,11 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
    mysql -u root -p
 ```
 
-2. Dans le fichier `/assets/script.sql`, toutes les commandes pour créer la base de données, son utilisation et la création des tables sont incluses.
+2.Dans le fichier `/assets/script.sql`, toutes les commandes pour créer la base de données, son utilisation et la création des tables sont incluses.
 
-3. Dans le fichier `/config/db.js`, remplacez vos informations d'identification dans la section suivante pour connecter l'application à votre base de données :
+3.Dans le fichier `/config/db.js`, remplacez vos informations d'identification dans la section suivante pour connecter l'application à votre base de données :
 
-```bash 
+```bash
  {
   user: "votre_nom_utilisateur",
   password: "votre_mot_de_passe",
@@ -59,8 +58,8 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 ```
 
 ## Tests avec Postman
- Dans le fichier `/assets/Recipe API.postman_collection.json`, une collection qui contient les quatre verbe Http pour testé les API
 
+Dans le fichier `/assets/Recipe API.postman_collection.json`, une collection qui contient les quatre verbe Http pour testé les API
 
 ## Endpoints de l'API
 
@@ -116,10 +115,9 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 
 ## Tests Unitaires
 
-  - tests unitaires pour notre modèle afin de vérifier que les actions CRUD fonctionnent correctement.
- 
+- tests unitaires pour notre modèle afin de vérifier que les actions CRUD fonctionnent correctement.
 
- la commande pour exécuter les tests :
+la commande pour exécuter les tests :
 
 ```bash
   npm test
@@ -142,20 +140,18 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 
 ## Lancement de conteneur Docker
 
-  - pour lancer le conteneur exécuter la commande .
+- pour lancer le conteneur exécuter la commande .
 
 ```bash
-  docker-compose up 
+  docker-compose up
 ```
-  - pour lancer le conteneur et interagir avec le serveur Mysql exécuter la commande .
+
+- pour lancer le conteneur et interagir avec le serveur Mysql exécuter la commande .
 
 ```bash
   docker exec -it mysql mysql -u root -p
 ```
+
 ## Auteur
-
-[Zoubeir Ba](https://github.com/Zoubeir7)
-
-## Contributeur
 
 [Assa baradji](https://github.com/AssaBaradji)
