@@ -6,7 +6,7 @@ Ce projet backend a été développé en Express.js pour gérer des recettes via
 
 ## Diagramme de Classes
 
-![Diagramme de Classes](./src/assets/Recipe%20UML.png)
+![Diagramme de Classes](./src/assets/Recette%20UML.png)
 
 ## Prérequis
 
@@ -44,10 +44,12 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 3.Dans le fichier `/config/db.js`, remplacez vos informations d'identification dans la section suivante pour connecter l'application à votre base de données :
 
 ```bash
- {
+{
   user: "votre_nom_utilisateur",
-   password: "", # Laissez ce champ vide, car aucun mot de passe n'est requis
+  password: "votre_mot_de_passe",
   database: "votre_nom_de_base_de_données",
+  host: "localhost",   MySQL
+  port: 3306
 }
 ```
 
@@ -138,18 +140,44 @@ la commande pour exécuter les tests :
   npn run format
 ```
 
-## Lancement de conteneur Docker
+## Étapes pour Construire et Lancer le Conteneur Docker
 
-- pour lancer le conteneur exécuter la commande .
+- Aprés avoir initialiser docker avec la commande
+
+```bash
+  docker init
+```
+
+1. Construire l'image Docker
+
+- Utilisez la commande suivante pour construire l'image Docker à partir du Dockerfile généré :
+
+```bash
+  docker build -t myrecette-api-app .
+```
+
+2.Construire l'image Docker
+
+- Une fois l'image construite, lancez un conteneur à partir de cette image avec la commande suivante :
+
+```bash
+  docker run -p 3000:3000 myrecette-api-app
+```
+
+3.Utiliser docker-compose
+
+- Si un fichier docker-compose.yml a été généré avec docker init, vous pouvez démarrer l'application et MySQL avec une seule commande :
 
 ```bash
   docker-compose up
 ```
 
-- pour lancer le conteneur et interagir avec le serveur Mysql exécuter la commande .
+4.Interagir avec MySQL
+
+- Si vous avez configuré MySQL via Docker, utilisez la commande suivante pour accéder à MySQL dans le conteneur
 
 ```bash
-  docker exec -it mysql mysql -u root -p
+  docker exec -it my_new_mysql_contenair mysql -u root -p
 ```
 
 ## Auteur
