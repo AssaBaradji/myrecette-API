@@ -14,6 +14,8 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés :
 
 - Node.js
 - npm
+- MySQL
+- Docker (optionnel)
 
 ## Installation
 
@@ -28,158 +30,142 @@ Suivez ces étapes pour configurer le projet sur votre machine locale :
 2.Installez les dépendances :
 
 ```bash
-   cd myrecette-API npm install
+   cd myrecette-API
+   npm install
 ```
 
 ## Configuration de la Base de Données
 
-1. Connectez-vous en tant qu'administrateur :
+1. Créez un fichier `.env` à la racine du projet en vous basant sur le fichier `.env.example` fourni. Ce fichier contient les variables d'environnement nécessaires pour configurer la connexion à la base de données MySQL.
 
-```bash
-   mysql -u root -p
-```
+2. Dans le fichier `/assets/script.sql`, vous trouverez toutes les commandes SQL nécessaires pour créer la base de données et les tables associées.
 
-2.Dans le fichier `/assets/script.sql`, toutes les commandes pour créer la base de données, son utilisation et la création des tables sont incluses.
-
-3.Dans le fichier `/config/db.js`, remplacez vos informations d'identification dans la section suivante pour connecter l'application à votre base de données :
-
-```bash
-{
-  user: "votre_nom_utilisateur",
-  password: "votre_mot_de_passe",
-  database: "votre_nom_de_base_de_données",
-  host: "localhost",   MySQL
-  port: 3306
-}
-```
+3. L'application se connecte automatiquement à la base de données en utilisant les variables d'environnement définies dans le fichier `.env`.
 
 ## Utilisation
+
+1. Démarrez l'application avec la commande suivante :
 
 ```bash
    npm start
 ```
 
+2.L'application sera disponible à l'adresse suivante : `http://localhost:3000`.
+
 ## Tests avec Postman
 
-Dans le fichier `/assets/Recipe API.postman_collection.json`, une collection qui contient les quatre verbe Http pour testé les API
+Une collection Postman est disponible dans le fichier `/assets/Recipe API.postman_collection.json` contenant des requêtes pour tester les différents endpoints de l'API.
 
 ## Endpoints de l'API
 
 1. **Récupérer une Recette par ID**
 
-   - **Point de terminaison :** `GET /recipes/:id`
+   - **Endpoint :** `GET /recipes/:id`
    - **Description :** Récupérer une seule recette par son ID.
    - **Réponse :** Objet recette ou une erreur 404 si non trouvé.
 
-2. **Récupérer Toutes les Recettes**
+2.**Récupérer Toutes les Recettes**
 
-   - **Point de terminaison :** `GET /recipes`
-   - **Description :** Récupérer toutes les recettes de la base de données.
-   - **Réponse :** Tableau d'objets recette.
+- **Endpoint :** `GET /recipes`
+- **Description :** Récupérer toutes les recettes de la base de données.
+- **Réponse :** Tableau d'objets recette.
 
-3. **Créer une Nouvelle Recette**
+  3.**Créer une Nouvelle Recette**
 
-   - **Point de terminaison :** `POST /recipes`
-   - **Description :** Créer une nouvelle recette.
-   - **Corps de la requête :**
+- **Endpoint :** `POST /recipes`
+- **Description :** Créer une nouvelle recette.
+- **Corps de la requête :**
 
-     ```json
-     {
-       "title": "Titre de la Recette",
-       "ingredient": "Liste des Ingrédients",
-       "type": "Type de Recette"
-     }
-     ```
+  ```json
+  {
+    "title": "Titre de la Recette",
+    "ingredient": "Liste des Ingrédients",
+    "type": "Type de Recette"
+  }
+  ```
 
-   - **Réponse :** Retourne l'ID de la recette nouvellement créée.
+- **Réponse :** Retourne l'ID de la recette nouvellement créée.
 
-4. **Mettre à Jour une Recette par ID**
+  4.**Mettre à Jour une Recette par ID**
 
-   - **Point de terminaison :** `PUT /recipes/:id`
-   - **Description :** Mettre à jour une recette existante par son ID.
-   - **Corps de la requête :**
+- **Endpoint :** `PUT /recipes/:id`
+- **Description :** Mettre à jour une recette existante par son ID.
+- **Corps de la requête :**
 
-     ```json
-     {
-       "title": "Titre Mis à Jour",
-       "ingredient": "Liste des Ingrédients Mise à Jour",
-       "type": "Type de Recette Mis à Jour"
-     }
-     ```
+  ```json
+  {
+    "title": "Titre Mis à Jour",
+    "ingredient": "Liste des Ingrédients Mise à Jour",
+    "type": "Type de Recette Mis à Jour"
+  }
+  ```
 
-   - **Réponse :** Confirmation de la mise à jour réussie ou une erreur 404 si non trouvé.
+- **Réponse :** Confirmation de la mise à jour réussie ou une erreur 404 si non trouvé.
 
-5. **Supprimer une Recette par ID**
+  5.**Supprimer une Recette par ID**
 
-   - **Point de terminaison :** `DELETE /recipes/:id`
-   - **Description :** Supprimer une recette par son ID.
-   - **Réponse :** Confirmation de la suppression réussie ou une erreur 404 si non trouvé.
+- **Endpoint :** `DELETE /recipes/:id`
+- **Description :** Supprimer une recette par son ID.
+- **Réponse :** Confirmation de la suppression réussie ou une erreur 404 si non trouvé.
 
 ## Tests Unitaires
 
-- tests unitaires pour notre modèle afin de vérifier que les actions CRUD fonctionnent correctement.
+Des tests unitaires sont disponibles pour vérifier que les actions CRUD fonctionnent correctement.
 
-la commande pour exécuter les tests :
+Exécutez les tests avec la commande suivante :
 
 ```bash
-  npm test
+npm test
 ```
 
 ## Analyse de Code et Formatage
 
-- **Intégration d'ESLint et Prettier :**
-- Executer ESLint pour l'analyse statique du code
+- **ESLint et Prettier sont intégrés :**
+
+  - Exécutez ESLint pour analyser statiquement le code :
 
 ```bash
-  npm run lint
+   npm run lint
 ```
 
-- Executer Prettier pour le formatage automatique du code.
+- Exécutez Prettier pour formater automatiquement le code :
 
 ```bash
-  npn run format
+   npm run format
 ```
 
 ## Étapes pour Construire et Lancer le Conteneur Docker
 
-- Aprés avoir initialiser docker avec la commande
+1. Initialisez Docker (si ce n'est pas déjà fait) :
 
 ```bash
-  docker init
+   docker init
 ```
 
-1. Construire l'image Docker
-
-- Utilisez la commande suivante pour construire l'image Docker à partir du Dockerfile généré :
+2.Construisez l'image Docker à partir du Dockerfile :
 
 ```bash
-  docker build -t myrecette-api-app .
+docker build -t myrecette-api-app .
 ```
 
-2.Construire l'image Docker
-
-- Une fois l'image construite, lancez un conteneur à partir de cette image avec la commande suivante :
+3.Lancez un conteneur à partir de cette image :
 
 ```bash
-  docker run -p 3000:3000 myrecette-api-app
+docker run -p 3000:3000 myrecette-api-app
 ```
 
-3.Utiliser docker-compose
-
-- Si un fichier docker-compose.yml a été généré avec docker init, vous pouvez démarrer l'application et MySQL avec une seule commande :
+4.Si vous utilisez un fichier `docker-compose.yml`, démarrez l'application et MySQL avec la commande suivante :
 
 ```bash
-  docker-compose up
+   docker-compose up
 ```
 
-4.Interagir avec MySQL
-
-- Si vous avez configuré MySQL via Docker, utilisez la commande suivante pour accéder à MySQL dans le conteneur
+5.Pour interagir avec MySQL dans le conteneur Docker, utilisez la commande suivante :
 
 ```bash
-  docker exec -it my_new_mysql_contenair mysql -u root -p
+   docker exec -it my_new_mysql_container mysql -u root -p
 ```
 
 ## Auteur
 
-[Assa baradji](https://github.com/AssaBaradji)
+[Assa Baradji](https://github.com/AssaBaradji)
